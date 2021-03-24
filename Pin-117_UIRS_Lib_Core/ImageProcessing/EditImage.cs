@@ -37,21 +37,21 @@ namespace Pin_117_UIRS_Lib_Core.ImageProcessing
             using var source = new ImageWrapper(img.ToBitmap());
             using Bitmap result = new Bitmap(source.Width, source.Height);
 
+
             using var mask = new ImageWrapper(bimg.ToBitmap());
+
+            var en = source.GetEnumerator();
 
             using (var graf = Graphics.FromImage(result))
             {
                 var pen = new Pen(Color.White);
 
-                for (int i = 0; i < result.Width; i++)
+                while (en.MoveNext())
                 {
-                    for (int j = 0; j < result.Height; j++)
-                    {
-                        var point = new Point(i, j);
+                    var point = en.Current;
 
-                        var pen2 = mask[i, j].GetBrightness() == 1 ? new Pen(Color.White) : new Pen(source[i, j]);
-                        graf.DrawLine(pen2, point.X, point.Y, point.X - 1, point.Y);
-                    }
+                    var pen2 = mask[point].GetBrightness() == 1 ? new Pen(Color.White) : new Pen(source[point]);
+                    graf.DrawLine(pen2, point.X, point.Y, point.X - 1, point.Y);
                 }
             }
 

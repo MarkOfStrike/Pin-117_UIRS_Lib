@@ -4,7 +4,6 @@ using System.Linq;
 
 using Pin_117_UIRS_Lib_Core.Structs.Interfaces;
 
-using Progress;
 
 namespace Pin_117_UIRS_Lib_Core.Training.ActionsObject
 {
@@ -25,8 +24,6 @@ namespace Pin_117_UIRS_Lib_Core.Training.ActionsObject
                 var results = new List<double>();
                 var countError = 0;
 
-                using (var progress = new ProgressBar())
-                {
                     Console.Write($"Тестирование объекта {details[i].Name}: ");
 
                     var count = dt.Count;
@@ -47,10 +44,8 @@ namespace Pin_117_UIRS_Lib_Core.Training.ActionsObject
                         }
 
                         results.Clear();
-                        progress.Report((double)j / count);
                     }
 
-                }
 
                 Console.WriteLine($"кол-во ошибок {countError}/{dt.Count} | точность вычислений {(double)(dt.Count - countError) / dt.Count}");
 

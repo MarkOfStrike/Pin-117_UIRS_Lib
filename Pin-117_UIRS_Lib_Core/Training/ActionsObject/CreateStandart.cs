@@ -7,7 +7,6 @@ using System.Text;
 using Pin_117_UIRS_Lib_Core.Structs;
 using Pin_117_UIRS_Lib_Core.Structs.Interfaces;
 
-using Progress;
 
 namespace Pin_117_UIRS_Lib_Core.Training.ActionsObject
 {
@@ -33,8 +32,6 @@ namespace Pin_117_UIRS_Lib_Core.Training.ActionsObject
                 var resultMas = new List<Value>();
                 var resultK = new List<double[]>();
 
-                using (var progress = new ProgressBar())
-                {
                     Console.Write($"Создание эталонов для объекта {details[i].Name}: ");
 
                     var count = (double)currentKMas.Count;
@@ -67,9 +64,7 @@ namespace Pin_117_UIRS_Lib_Core.Training.ActionsObject
 
                         resultMas.Clear();
 
-                        progress.Report((count - currentKMas.Count + 1) / count);
                     }
-                }
 
                 Console.WriteLine("Выполнено!");
 

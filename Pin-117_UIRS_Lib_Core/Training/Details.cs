@@ -35,7 +35,7 @@ namespace Pin_117_UIRS_Lib_Core.Training
 
                 var resultK = new List<double[]>();
 
-                foreach (var item in mas)
+                Parallel.ForEach(mas, item => 
                 {
                     var masK = item.Split(";", StringSplitOptions.RemoveEmptyEntries);
                     var k = new double[masK.Length];
@@ -46,7 +46,8 @@ namespace Pin_117_UIRS_Lib_Core.Training
                     }
 
                     resultK.Add(k);
-                }
+                });
+
                 return new Detail(resultK, info.Name, type);
             }
         }

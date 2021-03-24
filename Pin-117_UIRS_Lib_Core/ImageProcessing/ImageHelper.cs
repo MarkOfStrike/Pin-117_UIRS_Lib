@@ -19,23 +19,12 @@ namespace Pin_117_UIRS_Lib_Core.ImageProcessing
         {
             var er = b.GetEnumerator();
 
-            do
+            while (er.MoveNext())
             {
                 Color cur = b[er.Current];
                 if (cur.R == ContourColor.R && cur.G == ContourColor.G && cur.B == ContourColor.B)
                     return er.Current;
-
-            } while (er.MoveNext());
-
-            //for (var y = 1; y < b.Height; y++)
-            //{
-            //    for (var x = 1; x < b.Width; x++)
-            //    {
-            //        Color cur = b[x, y];
-            //        if (cur.R == ContourColor.R && cur.G == ContourColor.G && cur.B == ContourColor.B)
-            //            return new Point(x, y);
-            //    }
-            //}
+            }
 
             return null;
         }
@@ -49,8 +38,8 @@ namespace Pin_117_UIRS_Lib_Core.ImageProcessing
         {
             var result = new List<Point>();
 
-            var img = new ImageWrapper(bitmap);
-            bitmap.Dispose();
+            var img = new ImageWrapper(bitmap, true);
+            
 
             using (img)
             {
@@ -108,6 +97,8 @@ namespace Pin_117_UIRS_Lib_Core.ImageProcessing
                     if (!found) break;
                 } while (curPoint != startPoint);
             }
+
+            bitmap.Dispose();
 
             return result;
         }

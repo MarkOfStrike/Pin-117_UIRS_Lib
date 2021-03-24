@@ -22,27 +22,17 @@ namespace Pin_117_UIRS_Lib_Core.Signs
         public static int GetS0(Bitmap source)
         {
             using var img = new ImageWrapper(source);
-
             var en = img.GetEnumerator();
 
             int s0 = 0;
 
-            do
+            while (en.MoveNext())
             {
                 if (img[en.Current].ToArgb() == Color.Black.ToArgb())
                 {
                     s0++;
                 }
-
-            } while (en.MoveNext());
-
-            //for (int i = 0; i < source.Width; i++)
-            //{
-            //    for (int j = 0; j < source.Height; j++)
-            //    {
-
-            //    }
-            //}
+            }
 
             return s0;
         }

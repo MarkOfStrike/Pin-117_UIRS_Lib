@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Pin_117_UIRS_Lib_Core.Structs;
 
@@ -19,7 +20,7 @@ namespace Pin_117_UIRS_Lib_Core.Training
         {
             var tmpList = new List<double>();
 
-            foreach (var item in source)
+            Parallel.ForEach(source, item => 
             {
                 var tmp = 0D;
 
@@ -29,11 +30,11 @@ namespace Pin_117_UIRS_Lib_Core.Training
                 }
 
                 tmpList.Add(Math.Sqrt(tmp));
-            }
+            });
+
 
             var min = tmpList.Min();
             var index = tmpList.IndexOf(min);
-
 
             return new Value(min, index);
         }

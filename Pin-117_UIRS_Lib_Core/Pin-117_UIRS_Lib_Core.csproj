@@ -15,10 +15,4 @@
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="ProgressBar">
-      <HintPath>..\lib\ProgressBar.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
