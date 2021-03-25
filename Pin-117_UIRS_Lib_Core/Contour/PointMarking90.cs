@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 using Pin_Library_UIRS_Core.Structs;
 
@@ -57,6 +59,7 @@ namespace Pin_Library_UIRS_Core
                 }
             }
 
+
             return new Marking(countN, countP);
         }
 
@@ -67,25 +70,10 @@ namespace Pin_Library_UIRS_Core
         /// <returns>Матрица с исходными точками</returns>
         private static int[,] PointsToMatrix(ICollection<Point> points)
         {
-            var maxX = 0;
-            var maxY = 0;
-            var minX = int.MaxValue;
-            var minY = int.MaxValue;
-
-            foreach (var point in points)
-            {
-                if (point.X > maxX)
-                    maxX = point.X;
-
-                if (point.Y > maxY)
-                    maxY = point.Y;
-
-                if (point.X < minX)
-                    minX = point.X;
-
-                if (point.Y < minY)
-                    minY = point.Y;
-            }
+            var maxX = points.Max(p => p.X);
+            var maxY = points.Max(p => p.Y);
+            var minX = points.Min(p => p.X);
+            var minY = points.Min(p => p.Y);
 
             var matrix = new int[maxX + 2, maxY + 2];
 
@@ -93,21 +81,18 @@ namespace Pin_Library_UIRS_Core
             {
                 for (var y = 0; y < matrix.GetLength(1); y++)
                 {
-                    if (points.Contains(new Point(x, y)))
-                    {
-                        matrix[x, y] = 0;
-                    }
-                    else
-                    {
-                        matrix[x, y] = 1;
-                    }
+                    matrix[x, y] = 1;
                 }
             }
 
+            foreach (var point in points)
+            {
+                matrix[point.X, point.Y] = 0;
+            }
 
             var avg = new Point((minX + maxX) / 2, (minY + maxY) / 2);
-            
-            return FillByPoint(matrix, avg,1);
+
+            return FillByPoint(matrix, avg, 1);
         }
         /// <summary>
         /// Заливка по контуру
@@ -122,8 +107,6 @@ namespace Pin_Library_UIRS_Core
             var numSrc = srs[point.X, point.Y];
             points.Push(point);
 
-            
-            
             while (points.Count > 0)
             {
                 Point cur = points.Pop();

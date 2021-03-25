@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 using Pin_Library_UIRS_Core.Structs;
 
@@ -37,23 +39,10 @@ namespace Pin_Library_UIRS_Core
         }
         
 
-        private static int[,] BuildPoint(ICollection<Point> pointses)
+        private static int[,] BuildPoint(IList<Point> pointses)
         {
-            int X = 0;
-            int Y = 0;
-
-            foreach (var point in pointses)
-            {
-                if (point.X > X)
-                {
-                    X = point.X;
-                }
-
-                if (point.Y > Y)
-                {
-                    Y = point.Y;
-                }
-            }
+            int X = pointses.Max(s => s.X);
+            int Y = pointses.Max(s => s.Y);
 
             int[,] allMas = new int[X + 6, Y + 6];
 
@@ -63,12 +52,12 @@ namespace Pin_Library_UIRS_Core
                 {
                     allMas[i, j] = 1;
 
-                    if (pointses.Contains(new Point(i, j)))
-                    {
-                        allMas[i, j] = 0;
-                    }
-
                 }
+            }
+
+            foreach (var point in pointses)
+            {
+                allMas[point.X, point.Y] = 0;
             }
 
             var avg = new Point(allMas.GetLength(0) / 2, allMas.GetLength(1) / 2);
@@ -79,7 +68,7 @@ namespace Pin_Library_UIRS_Core
 
         public static Marking Build(ICollection<Point> pointses)
         {
-            var mas = BuildPoint(pointses);
+            var mas = BuildPoint(pointses.ToList());
 
             var minus = 0;
             var plus = 0;

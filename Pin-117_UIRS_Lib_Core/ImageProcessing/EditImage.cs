@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
-using System.Text;
+﻿using System.Drawing;
 
 using Emgu.CV;
+using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
-
-using Pin_Library_UIRS_Core;
 
 namespace Pin_117_UIRS_Lib_Core.ImageProcessing
 {
@@ -24,12 +19,12 @@ namespace Pin_117_UIRS_Lib_Core.ImageProcessing
         }
         public static Image<Gray, byte> FilterImage(Image<Gray, byte> img)
         {
-            CvInvoke.MedianBlur(img, img, 1);
+            CvInvoke.MedianBlur(img, img, 3);
             return img;
         }
         public static Image<Gray, byte> BinarizationImages(Image<Gray, byte> img)
         {
-            CvInvoke.Threshold(img, img, 150, 255, Emgu.CV.CvEnum.ThresholdType.Otsu);
+            CvInvoke.Threshold(img, img, 150, 255, ThresholdType.Otsu);
             return img;
         }
         public static Image<Gray, byte> DeleteTheBackground(Image<Gray, byte> img, Image<Gray, byte> bimg)
