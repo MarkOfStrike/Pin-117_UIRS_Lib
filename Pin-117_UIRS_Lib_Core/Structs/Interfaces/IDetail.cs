@@ -4,7 +4,7 @@ namespace Pin_117_UIRS_Lib_Core.Structs.Interfaces
 {
     public interface IDetail
     {
-        List<double[]> Standarts { get; }
+        IList<double[]> Standarts { get; }
         string Name { get; }
     }
 }

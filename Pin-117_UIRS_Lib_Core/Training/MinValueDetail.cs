@@ -20,7 +20,7 @@ namespace Pin_117_UIRS_Lib_Core.Training
         {
             var tmpList = new List<double>();
 
-            Parallel.ForEach(source, item => 
+            foreach (var item in source)
             {
                 var tmp = 0D;
 
@@ -30,8 +30,7 @@ namespace Pin_117_UIRS_Lib_Core.Training
                 }
 
                 tmpList.Add(Math.Sqrt(tmp));
-            });
-
+            }
 
             var min = tmpList.Min();
             var index = tmpList.IndexOf(min);

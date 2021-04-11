@@ -24,27 +24,27 @@ namespace Pin_117_UIRS_Lib_Core.Training.ActionsObject
                 var results = new List<double>();
                 var countError = 0;
 
-                    Console.Write($"Тестирование объекта {details[i].Name}: ");
+                Console.Write($"Тестирование объекта {details[i].Name}: ");
 
-                    var count = dt.Count;
+                var count = dt.Count;
 
-                    for (int j = 0; j < count; j++)
+                for (int j = 0; j < count; j++)
+                {
+                    foreach (var standart in standarts)
                     {
-                        foreach (var standart in standarts)
-                        {
-                            var value = (IValue)MinValueDetail.GetMinValue(standart.Standarts, dt[j]);
-                            results.Add(value.MinValue);
-                        }
-
-                        var index = results.IndexOf(results.Min());
-
-                        if (index != i)
-                        {
-                            countError++;
-                        }
-
-                        results.Clear();
+                        var value = (IValue)MinValueDetail.GetMinValue(standart.Standarts, dt[j]);
+                        results.Add(value.MinValue);
                     }
+
+                    var index = results.IndexOf(results.Min());
+
+                    if (index != i)
+                    {
+                        countError++;
+                    }
+
+                    results.Clear();
+                }
 
 
                 Console.WriteLine($"кол-во ошибок {countError}/{dt.Count} | точность вычислений {(double)(dt.Count - countError) / dt.Count}");

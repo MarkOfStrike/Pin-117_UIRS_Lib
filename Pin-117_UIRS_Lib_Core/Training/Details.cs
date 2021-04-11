@@ -12,14 +12,14 @@ namespace Pin_117_UIRS_Lib_Core.Training
 {
     public static class Details
     {
-        public static List<T> GetDetails<T>(string[] filesPath, TypeDetail type)
+        public static List<T> GetDetails<T>(string[] filesPath, TypeDetail type) where T:class
         {
             var details = new List<T>();
 
-            Parallel.ForEach(filesPath.OrderBy(s => s), file =>
+            foreach (var file in filesPath.OrderBy(s => s))
             {
                 details.Add((T)(object)GetDetail(file, type));
-            });
+            }
 
             return details;
         }
@@ -35,7 +35,7 @@ namespace Pin_117_UIRS_Lib_Core.Training
 
                 var resultK = new List<double[]>();
 
-                Parallel.ForEach(mas, item => 
+                foreach (var item in mas)
                 {
                     var masK = item.Split(";", StringSplitOptions.RemoveEmptyEntries);
                     var k = new double[masK.Length];
@@ -46,7 +46,7 @@ namespace Pin_117_UIRS_Lib_Core.Training
                     }
 
                     resultK.Add(k);
-                });
+                }
 
                 return new Detail(resultK, info.Name, type);
             }

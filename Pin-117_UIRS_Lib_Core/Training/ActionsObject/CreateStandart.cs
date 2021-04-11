@@ -32,39 +32,40 @@ namespace Pin_117_UIRS_Lib_Core.Training.ActionsObject
                 var resultMas = new List<Value>();
                 var resultK = new List<double[]>();
 
-                    Console.Write($"Создание эталонов для объекта {details[i].Name}: ");
+                Console.Write($"Создание эталонов для объекта {details[i].Name}: ");
 
-                    var count = (double)currentKMas.Count;
-                    var countMas = currentKMas.Count;
+                var count = (double)currentKMas.Count;
+                var countMas = currentKMas.Count;
 
 
-                    while (currentKMas.Count > 0)
+                while (currentKMas.Count > 0)
+                {
+                    for (int j = 0; j < details.Count; j++)
                     {
-                        for (int j = 0; j < details.Count; j++)
-                        {
-                            var value = MinValueDetail.GetMinValue(i == j ? currentKMas : details[j].Standarts, currentStandart);
-                            resultMas.Add(value);
-                        }
-
-                        var tmp = resultMas.Select(v => v.MinValue).ToList();
-
-                        var indexMin = tmp.IndexOf(tmp.Min());
-                        index = random.Next(currentKMas.Count);
-
-                        if (indexMin != i)
-                        {
-                            resultK.Add(currentStandart);
-                            currentStandart = currentKMas[index];
-                            currentKMas.RemoveAt(index);
-                        }
-                        else
-                        {
-                            currentKMas.RemoveAt(resultMas[indexMin].Index);
-                        }
-
-                        resultMas.Clear();
-
+                        var value = MinValueDetail.GetMinValue(i == j ? currentKMas : details[j].Standarts, currentStandart);
+                        resultMas.Add(value);
                     }
+
+                    var tmp = resultMas.Select(v => v.MinValue).ToList();
+
+                    var indexMin = tmp.IndexOf(tmp.Min());
+                    index = random.Next(currentKMas.Count);
+
+                    if (indexMin != i)
+                    {
+                        resultK.Add(currentStandart);
+                        currentStandart = currentKMas[index];
+                        currentKMas.RemoveAt(index);
+                    }
+                    else
+                    {
+                        currentKMas.RemoveAt(resultMas[indexMin].Index);
+                    }
+
+                    resultMas.Clear();
+
+                }
+
 
                 Console.WriteLine("Выполнено!");
 
