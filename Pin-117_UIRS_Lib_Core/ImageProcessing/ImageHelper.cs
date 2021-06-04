@@ -17,13 +17,14 @@ namespace Pin_117_UIRS_Lib_Core.ImageProcessing
         /// </summary>
         private static Point? FindAnyContourPoint(ImageWrapper b)
         {
-            var er = b.GetEnumerator();
-
-            while (er.MoveNext())
+            for (var y = 5; y < b.Height; y++)
             {
-                Color cur = b[er.Current];
-                if (cur.R == ContourColor.R && cur.G == ContourColor.G && cur.B == ContourColor.B)
-                    return er.Current;
+                for (var x = 5; x < b.Width; x++)
+                {
+                    Color cur = b[x, y];
+                    if (cur.R == ContourColor.R && cur.G == ContourColor.G && cur.B == ContourColor.B)
+                        return new Point(x, y);
+                }
             }
 
             return null;

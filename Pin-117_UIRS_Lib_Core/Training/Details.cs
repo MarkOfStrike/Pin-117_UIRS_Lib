@@ -6,7 +6,6 @@ using System.Text;
 
 using Pin_117_UIRS_Lib_Core.Enums;
 using Pin_117_UIRS_Lib_Core.Structs;
-using System.Threading.Tasks;
 
 namespace Pin_117_UIRS_Lib_Core.Training
 {

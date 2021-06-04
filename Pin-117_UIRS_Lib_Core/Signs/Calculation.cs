@@ -50,7 +50,7 @@ namespace Pin_117_UIRS_Lib_Core.Signs
         /// <returns>Набор безразмерных признаков</returns>
         public static double[] GetOdds(List<Point> points, int s0, int p0, int numTask) => numTask switch
         {
-            1 => ForOne(points, s0, p0),
+            1 => ForOne(points),
             2 => ForTwo(points, s0, p0),
             3 => ForTree(points, s0, p0),
             4 => ForFour(points, p0),
@@ -61,9 +61,34 @@ namespace Pin_117_UIRS_Lib_Core.Signs
             _ => throw new NotImplementedException("Такого варианта не существует!")
         };
 
-        //ДОДЕЛАТЬ ВАРИАНТЫ
+        private static double[] ForOne(List<Point> points) {
 
-        private static double[] ForOne(List<Point> points, int s0, int p0) { throw new NotImplementedException(); }
+            // Кривизна точек контура +90 -90
+            // Создаем экземпляр класса и получаем из него данные в результате выполнения метода
+            var marking1 = PointMarking90.MarkContourPoints(points);
+
+            var plus90 = marking1.CountPositiveAngles;
+            var minus90 = marking1.CountNegativeAngles;
+
+            // Кривизна точек конутра +135 -135
+            // Создаем экземпляр класса и получаем из него данные в результате выполнения метода
+            var marking = PointMarking135.Build(points);
+
+            var plus135 = marking.CountPositiveAngles;
+            var minus135 = marking.CountNegativeAngles;
+
+            // Рассчет К и Т
+            // Создаем экземпляр класса и получаем из него данные в результате выполнения метода
+            var connectedPoints = CountingAlgoritm.CountPoints(points);
+
+            var T = connectedPoints.T;
+            var K = connectedPoints.K;
+
+            double N9 = K + T;
+
+            return new double[] { N9, plus90, minus90, plus135, minus135 };
+
+        }
         private static double[] ForTwo(List<Point> points, int s0, int p0) { throw new NotImplementedException(); }
         private static double[] ForTree(List<Point> points, int s0, int p0) 
         {
@@ -116,12 +141,12 @@ namespace Pin_117_UIRS_Lib_Core.Signs
             var Lvg = 0.5d * (m2 * 2d * B + m4 * (A + B));
             var Lkont = GetLkont(orientations);
 
-            double k1 = m1 / p0;
-            double k2 = m2 / p0;
-            double k3 = m3 / p0;
-            double k4 = m4 / p0;
-            double k5 = k / p0;
-            double k6 = t / p0;
+            double k1 = (double)m1 / p0;
+            double k2 = (double)m2 / p0;
+            double k3 = (double)m3 / p0;
+            double k4 = (double)m4 / p0;
+            double k5 = (double)k / p0;
+            double k6 = (double)t / p0;
             double k7 = Lln / Lkont;
             double k8 = Lvg / Lkont;
             double k9 = Lvp / Lkont;
